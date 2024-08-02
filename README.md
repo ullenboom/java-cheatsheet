@@ -1,6 +1,9 @@
 Ein umfassendes und leicht verständliches Cheat Sheet für Java-Entwickler. Diese Sammlung von Snippets, Tipps und Best Practices deckt die grundlegenden bis fortgeschrittenen Java-Konzepte ab und bietet schnelle Referenzen für häufig verwendete Syntax und Funktionen. Perfekt für Anfänger, die Java lernen, sowie Umsteiger, die ihr Wissen auffrischen möchten.
 
 ```java
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 @SuppressWarnings( "all" )
 public class Cheatsheet {
   public static void main( String[] args ) {
@@ -9,10 +12,10 @@ public class Cheatsheet {
     ///
     {
       // Ganzzahlen
-      byte octet = 100;              // 8-bit, Bereich: -128 bis 127
-      short s = 10000;               // 16-bit, Bereich: -32,768 bis 32,767
-      int i = 100000;                // 32-bit, Bereich: -2^31 bis 2^31-1
-      long l = 1000000000000L;       // 64-bit, Bereich: -2^63 bis 2^63-1
+      byte octet = 100;              // 8-Bit, Bereich: -128 bis 127
+      short s = 10000;               // 16-Bit, Bereich: -32,768 bis 32,767
+      int i = 100000;                // 32-Bit, Bereich: -2^31 bis 2^31-1
+      long l = 1000000000000L;       // 64-Bit, Bereich: -2^63 bis 2^63-1
       //                   ☝️           Long Literale haben L oder l am Ende
 
       // Fließkommazahlen
@@ -22,7 +25,7 @@ public class Cheatsheet {
 
       // Einzelne Zeichen
       char c = 'A';                  // 16-bit Unicode Zeichen
-      //       ☝️                       Einzelnde Zeichen in einzelnen Anführungszeichen
+      //       ☝️                       Einzelne Zeichen in einzelnen Anführungszeichen
 
       // Boolesche Werte
       boolean bool = true;           // true oder false
@@ -32,11 +35,11 @@ public class Cheatsheet {
       //          ☝️ ️
 
       String muliline = """
-                       ☝️ Mehrzeilige Zeichenketten beginnnen mit drei ".    
+                       ☝️ Mehrzeilige Zeichenketten beginnen mit drei ".    
           Und dann folgt ein Zeilenumbruch.""";
 
       // Finale (Konstante) Variablen
-      final double PI = 3.14159;    // Konstante (kann nicht geändert werden)
+      final double PI = 3.14159;  // Konstante (kann nicht geändert werden)
 
       // Literal-Notationen
       int binary = 0b1010_1010;  // 170 in Dezimal
@@ -172,14 +175,14 @@ public class Cheatsheet {
         //☝️  yield nutzen, wenn rechts vom Pfeil kein direkter Ausdruck steht
       }
       case null, default -> "Invalid day";
-      //       ☝️        null und default kann man mit case und Komma zusammenfasen
+      //       ☝️        null und default kann man mit case und Komma zusammenfassen
     } );
 
     ///
     /// Schleifen
     ///
 
-    // While-Schleife, Erst Prüfung vor ersten Durchlauf
+    // While-Schleife, erst Prüfung vor ersten Durchlauf
     while ( Math.random() < 0.2 ) {  // 👈 Bedingung muss vom Typ boolean sein
       // Wiederholter Code
     }
@@ -202,16 +205,88 @@ public class Cheatsheet {
     //    return;     // Beendet die Methode und gibt optional einen Wert zurück
 
     ///
+    /// Objekte (aka Exemplar, Instanzen), Referenzen, null
+    ///
+
+    new StringBuilder();
+    //☝️           Neue Instanz der Klasse StringBuilder wird mit new erstellt
+
+    StringBuilder stringBuilder;        // Deklaration einer Referenzvariablen
+
+    stringBuilder = new StringBuilder(); // Initialisieren einer Variablen mit neuer Instanz
+
+    StringBuilder stringBuilder2 = new StringBuilder(); // Deklaration und Initialisierung
+
+    StringBuilder anotherRef = stringBuilder;            // Referenz kopieren
+
+    // Zugreifen auf Objektmethoden und -variablen
+    stringBuilder.append( 1 );                           // Aufrufen einer Methode des Objekts
+    java.awt.Point point = new java.awt.Point();
+    point.x = 10;                                        // Setzen einer Objektvariablen
+    point.y = point.y;                                   // Auslesen und Setzen einer Objektvariablen
+
+    /// null-Verweise
+    StringBuilder nullObject = null;                     // Referenz zeigt auf kein Objekt
+
+    if ( nullObject == null ) {                          // Prüfen, ob eine Referenz null ist
+      System.out.println( "Referenz ist null" );
+    }
+
+    // Prüfen, ob eine Referenz nicht null ist, um NullPointerException zu vermeiden
+    if ( stringBuilder != null ) {
+      stringBuilder.toString();                       // Methode nur aufrufen, wenn das Objekt existiert
+    }
+
+    ///
     /// Arrays
     ///
 
     // Arrays deklarieren und Array-Literal-Notation
     int[] intArray = { 1, 2, 3, 4, 5 };              // Array von Ganzzahlen
     String[] stringArray = new String[ 5 ];          // Array von Strings mit Länge 5
-    int[][] zweiDArray = { { 1, 2 }, { 3, 4 }, { 5, 6 } }; // Zweidimensionales Array
+    int[][] twoDArray = { { 1, 2 }, { 3, 4 }, { 5, 6 } }; // Zweidimensionales Array
+
+    // Auf Array-Elemente zugreifen
+    int firstElement = intArray[ 0 ];                // Erstes Element des Arrays
+    stringArray[ 0 ] = "Hello";                      // Erstes Element setzen
+    int arrayLength = intArray.length;               // Länge des Arrays ermitteln, 5
+
+    // Über Arrays iterieren
+    for ( int i = 0; i < intArray.length; i++ ) {    // Variante 1
+      System.out.println( intArray[ i ] );           // Element per Indexzugriff ausgeben
+    }
+
+    for ( int value : intArray ) {                   // Variante 2: Erweitere for-Schleife
+      System.out.println( value );                   // Der Index steht nicht zur Verfügung
+    }
+
+    // java.util.Arrays ist eine Utiltiy-Klasse
+    Arrays.fill( intArray, 42 );                     // Alle Elemente des Arrays auf 42 setzen
+    Arrays.sort( intArray );                         // Sotieren in aufsteigender Reihenfolge
+    Arrays.sort( stringArray );                      // String-Array alphabetisch sortieren
+    int index = Arrays.binarySearch( intArray, 3 );    // Binäre Suche im sortierten Array
+    int[] copiedArray = Arrays.copyOf( intArray, intArray.length ); // Ganzes Array kopieren
+    int[] partialCopy = Arrays.copyOfRange( intArray, 1,
+                                            3 );       // Teilbereich des Arrays kopieren
+    String arrayAsString = Arrays.toString(
+        intArray ); // Array zu String umwandeln: [1, 2, 3, 4, 5]
+
+    // Mehrdimensionale Arrays
+    int[][] matrix = new int[ 3 ][ 3 ];                  // Zweidimensionales Array (Matrix) deklarieren
+    matrix[ 0 ][ 0 ] = 1;                                // Element setzen
+
+    int[][][] threeDArray = new int[ 2 ][ 2 ][ 2 ];      // Dreidimensionales Array 2x2x2
+
+    /// Mehrdimensionale Arrays iterieren
+    for ( int i = 0; i < matrix.length; i++ ) {
+      for ( int j = 0; j < matrix[ i ].length; j++ ) {
+        System.out.print( matrix[ i ][ j ] + " " );
+      }
+      System.out.println();
+    }
 
     ///
-    /// Objekte
+    /// Standard-Objekte
     ///
 
     int intPrim = 42;
@@ -228,7 +303,6 @@ public class Cheatsheet {
     System.out.println( a == b );                 // true (Caching -128 bis 127)
     System.out.println( c == d );                 // false
     System.out.println( c.equals( d ) );          // true
-
   }
 }
 ```
