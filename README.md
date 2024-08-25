@@ -2,7 +2,6 @@ Ein umfassendes und leicht verständliches Cheat Sheet für Java-Entwickler. Die
 
 ```java
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 @SuppressWarnings( "all" )
 public class Cheatsheet {
@@ -19,7 +18,7 @@ public class Cheatsheet {
       //                   ☝️           Long Literale haben L oder l am Ende
 
       // Fließkommazahlen
-      double d = 3.14159265359;      // 64-bit IEEE 754 (Standard für Dezimalzahlen)
+      double d = 3.14159265359;      // 64-bit IEEE 754 (Standard für Fließkommazahlen)
       float f = 3.14f;               // 32-bit IEEE 754
       //           ☝️                   Float-Literale haben F oder f am Ende.
 
@@ -34,8 +33,8 @@ public class Cheatsheet {
       String str = "Strings stehen in 'doppelten' Anführungszeichen";
       //          ☝️ ️
 
-      String muliline = """
-                       ☝️ Mehrzeilige Zeichenketten beginnen mit drei ".    
+      String multiline = """
+                        ☝️ Mehrzeilige Zeichenketten beginnen mit drei ".    
           Und dann folgt ein Zeilenumbruch.""";
 
       // Finale (Konstante) Variablen
@@ -203,11 +202,12 @@ public class Cheatsheet {
     //    break;      // Beendet die aktuelle Schleife oder switch-Anweisung
     //    continue;   // Springt zum nächsten Schleifendurchlauf
     //    return;     // Beendet die Methode und gibt optional einen Wert zurück
+  }
+}
 
-    ///
-    /// Objekte (aka Exemplar, Instanzen), Referenzen, null
-    ///
-
+@SuppressWarnings( "all" )
+class ClassNewReferencesNullExamples {
+  public static void main( String[] args ) {
     new StringBuilder();
     //☝️           Neue Instanz der Klasse StringBuilder wird mit new erstellt
 
@@ -223,7 +223,7 @@ public class Cheatsheet {
     stringBuilder.append( 1 );                           // Aufrufen einer Methode des Objekts
     java.awt.Point point = new java.awt.Point();
     point.x = 10;                                        // Setzen einer Objektvariablen
-    point.y = point.y;                                   // Auslesen und Setzen einer Objektvariablen
+    point.y = point.x;                                   // Auslesen und Setzen einer Objektvariablen
 
     /// null-Verweise
     StringBuilder nullObject = null;                     // Referenz zeigt auf kein Objekt
@@ -236,11 +236,12 @@ public class Cheatsheet {
     if ( stringBuilder != null ) {
       stringBuilder.toString();                       // Methode nur aufrufen, wenn das Objekt existiert
     }
+  }
+}
 
-    ///
-    /// Arrays
-    ///
-
+@SuppressWarnings( "all" )
+class ArrayExamples {
+  public static void main( String[] args ) {
     // Arrays deklarieren und Array-Literal-Notation
     int[] intArray = { 1, 2, 3, 4, 5 };              // Array von Ganzzahlen
     String[] stringArray = new String[ 5 ];          // Array von Strings mit Länge 5
@@ -262,14 +263,15 @@ public class Cheatsheet {
 
     // java.util.Arrays ist eine Utiltiy-Klasse
     Arrays.fill( intArray, 42 );                     // Alle Elemente des Arrays auf 42 setzen
-    Arrays.sort( intArray );                         // Sotieren in aufsteigender Reihenfolge
+    Arrays.sort( intArray );                         // Sortieren in aufsteigender Reihenfolge
     Arrays.sort( stringArray );                      // String-Array alphabetisch sortieren
-    int index = Arrays.binarySearch( intArray, 3 );    // Binäre Suche im sortierten Array
+    // Binäre Suche im sortierten Array, -1 wenn nicht gefunden
+    int index = Arrays.binarySearch( intArray, 3 );
     int[] copiedArray = Arrays.copyOf( intArray, intArray.length ); // Ganzes Array kopieren
     int[] partialCopy = Arrays.copyOfRange( intArray, 1,
                                             3 );       // Teilbereich des Arrays kopieren
-    String arrayAsString = Arrays.toString(
-        intArray ); // Array zu String umwandeln: [1, 2, 3, 4, 5]
+    // Array zu String umwandeln: [1, 2, 3, 4, 5]
+    String arrayAsString = Arrays.toString( intArray );
 
     // Mehrdimensionale Arrays
     int[][] matrix = new int[ 3 ][ 3 ];                  // Zweidimensionales Array (Matrix) deklarieren
@@ -284,11 +286,82 @@ public class Cheatsheet {
       }
       System.out.println();
     }
+  }
 
-    ///
-    /// Standard-Objekte
-    ///
+  static void printInfo( String name, int... scores ) {
+    //                                   ☝️  Methode mit Varargs
+    System.out.println( "Name: " + name );
+    System.out.println( "Scores: " + Arrays.toString( scores ) );
 
+    // Varargs aufrufen
+    // printInfo( "Jill" );
+    // printInfo( "Joe", 75, 80 );
+  }
+}
+
+@SuppressWarnings( "all" )
+class StringExamples {
+  public static void main( String[] args ) {
+
+    // char
+    char c1 = 'A';
+    char c2 = 65;                           // ASCII-Wert für 'A'
+    // char Operationen
+    char nextChar = (char) (c1 + 1);        // 'B'
+    // Character (Wrapper-Klasse für char)
+    Character ch = new Character( 'A' );
+    Character ch2 = 'A';                    // Autoboxing
+    // Character statische Methoden
+    boolean isDigit = Character.isDigit( '5' );       // true
+    boolean isLetter = Character.isLetter( 'A' );     // true
+    boolean isWhitespace = Character.isWhitespace( ' ' );  // true
+    char upperCase = Character.toUpperCase( 'a' );    // 'A'
+    char lowerCase = Character.toLowerCase( 'A' );    // 'a'
+
+    // String
+    String s1 = "tutego";
+    String s2 = new String( "tutego" );     // Möglich, aber
+    s1.length();                            // Länge des Strings
+    s1.charAt( 0 );                         // Zeichen an Position 0
+    s1.substring( 1, 4 );                   // Teilstring von Index 1 bis 3
+    s1.toLowerCase();                       // In Kleinbuchstaben
+    s1.toUpperCase();                       // In Großbuchstaben
+    s1.trim();                              // Leerzeichen am Anfang und Ende entfernen
+    s1.replace( 'e', 'a' );                 // 'e' durch 'a' ersetzen
+    s1.contains( "te" );                    // Prüft, ob "te" enthalten ist
+    String[] parts = s1.split( "e" );       // Teilt String an 'e'
+
+    // String Vergleiche
+    boolean isEqual = s1.equals( s2 );      // Inhalt vergleichen
+    boolean isSameRef = (s1 == s2);         // Referenz vergleichen (Vorsicht!)
+    int compResult = s1.compareTo( s2 );    // Lexikografischer Vergleich, <0, ==0, >0
+
+    // StringBuilder
+    StringBuilder sb = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder( "Initial content" );
+    sb.append( "Hello" );                   // Anhängen
+    sb.insert( 5, " World" );               // Einfügen an Position 5
+    sb.delete( 5, 11 );                     // Löschen von Index 5 bis 10
+    sb.reverse();                           // Umkehren
+    String result = sb.toString();          // In String umwandeln
+
+    // Konvertierungen
+    String str = "Hello";
+    char[] charArray = str.toCharArray();           // String zu char-Array
+    char[] charArray2 = { 'W', 'o', 'r', 'l', 'd' };
+    String str2 = new String( charArray2 );           // char-Array zu String
+    int num = 123;
+    String numStr = String.valueOf( num );            // int zu String
+    // oder
+    String numStr2 = Integer.toString( num );
+    String numStr3 = "456";
+    int parsedNum = Integer.parseInt( numStr3 );      // String zu int
+  }
+}
+
+@SuppressWarnings( "all" )
+class CoreClasseExamples {
+  public static void main( String[] args ) {
     int intPrim = 42;
     Integer intObj = Integer.valueOf( intPrim );  // Explizites Boxing
     Integer intAutoboxed = 42;
@@ -303,6 +376,128 @@ public class Cheatsheet {
     System.out.println( a == b );                 // true (Caching -128 bis 127)
     System.out.println( c == d );                 // false
     System.out.println( c.equals( d ) );          // true
+  }
+}
+
+@SuppressWarnings( "all" )
+// Basisklasse für geometrische Formen
+abstract class Shape {
+  //  ☝️                               Von abstrakten Klassen können keine Instanzen gebildet werden.
+  private String color;
+  //  ☝️                               Private Eigenschaft ist außerhalb von Shape nicht einsehbar.
+
+  Shape( String color ) {            // Parametrisierter Konstruktor
+    this.color = color;              // Initialisiert die Farbe
+  }
+
+  public String getColor() {
+    return /*this.*/color;
+    //        ☝️                     this ist nicht nötig, da es keinen Namenskonflikt gibt.
+  }
+
+  public abstract double getArea();
+  //        ☝️  Eine abstrakte Methode muss von allen Unterklassen implementiert werden,
+  //           oder die Unterklasse muss selbst abstrakt sein.
+
+  // Konkrete Methode in der abstrakten Klasse
+  public void displayInfo() {
+    System.out.println( "Dies ist eine " + getColor() + " Form." );
+    //                                       ☝️  Auch direkter Zugriff auf color wäre denkbar.
+  }
+}
+
+@SuppressWarnings( "all" )
+class Rectangle extends Shape {
+  //             ☝️                     Rectangle erbt von Shape. Nur eine Oberklasse ist erlaubt.
+  private double width;
+  private double height;
+
+  // Konstruktor
+  public Rectangle( String color, double width, double height ) {
+    super( color );
+    // ☝️                                Mit super Aufruf des Konstruktors der Oberklasse.
+    this.width = width;
+    this.height = height;
+  }
+
+  // Getter und Setter
+  public double getWidth() {return width;}
+
+  public void setWidth( double width ) {this.width = width;}
+
+  public double getHeight() {return height;}
+
+  public void setHeight( double height ) {this.height = height;}
+
+  // Implementation der abstrakten Methode
+  @Override
+  // ☝️                     Annotation dokumentiert das Überschreiben von Methoden.
+  public double getArea() {
+    return width * height;
+  }
+
+  // Rectangle kann als Unterklasse neue Methode hinzufügen.
+  public double getPerimeter() {
+    return 2 * (width + height);
+  }
+
+  // Überschreiben der Methode displayInfo()
+  // Alle nicht-privaten und nicht-finalen Methoden können überschrieben werden.
+  @Override
+  public void displayInfo() {
+    super.displayInfo();
+    System.out.println( "Es ist ein Rechteck mit Breite " + width + " und Höhe " + height + "." );
+  }
+
+  // Statische Methode zum Vergleich zweier Rechtecke
+  public static Rectangle getLarger( Rectangle r1, Rectangle r2 ) {
+    return r1.getArea() > r2.getArea() ? r1 : r2;
+  }
+}
+
+@SuppressWarnings( "all" )
+class RectangleExamples /* extends Object */ {
+  //                          ☝️    Wird keine explizite Oberklasse erweitert, ist es automatisch Object.
+
+  public static void main( String[] args ) {
+    Rectangle rect1 = new Rectangle( "Rot", 5, 3 );
+    Rectangle rect2 = new Rectangle( "Blau", 4, 4 );
+
+    System.out.println( "Rechteck 1:" );
+    rect1.displayInfo();
+    System.out.println( "Fläche: " + rect1.getArea() );
+    System.out.println( "Umfang: " + rect1.getPerimeter() );
+
+    System.out.println( "\nRechteck 2:" );
+    rect2.displayInfo();
+    System.out.println( "Fläche: " + rect2.getArea() );
+    System.out.println( "Umfang: " + rect2.getPerimeter() );
+
+    Shape shape1 = new Rectangle( "Rot", 5, 3 );
+    Shape shape2 = new Rectangle( "Blau", 4, 2 );
+    // ☝️   Referenztyp kann ein Basistyp sein
+    //                  ☝️   Objekttyp
+
+    Shape[] shapes = { shape1, shape2, new Rectangle( "Grün", 2, 2 ) };
+
+    for ( Shape shape : shapes ) {
+      shape.displayInfo();
+      System.out.println( shape.getArea() );
+      //                          ☝️   Methodenaufruf dynamisch gebunden an tatsächlichen Typ (Polymorphie)
+
+      if ( shape instanceof Rectangle ) {
+        //          ☝️                       Prüfen, ob hinter shape etwas vom Typ Rectangle steht.
+        Rectangle rect = (Rectangle) shape;
+        System.out.println( rect.getPerimeter() );
+        //                           ☝️     Ohne Typumwandlung gibt es getPerimeter() auf Shape nicht.
+      }
+    }
+
+    if ( shape1 instanceof Rectangle rectangle1 && shape2 instanceof Rectangle rectangle2 ) {
+      //                             ☝️   Pattern-Variable bei instanceof
+      //                                                                       ☝️
+      Rectangle larger = Rectangle.getLarger( rectangle1, rectangle2 );
+    }
   }
 }
 ```
