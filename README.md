@@ -1,137 +1,159 @@
-Ein umfassendes und leicht verständliches Cheat Sheet für Java-Entwickler. Diese Sammlung von Snippets, Tipps und Best Practices deckt die grundlegenden bis fortgeschrittenen Java-Konzepte ab und bietet schnelle Referenzen für häufig verwendete Syntax und Funktionen. Perfekt für Anfänger, die Java lernen, sowie Umsteiger, die ihr Wissen auffrischen möchten.
-
 ```java
-import java.util.Arrays;
+/* Ein umfassendes und leicht verständliches Cheat Sheet für Java-Entwickler.
+Diese Sammlung von Snippets, Tipps und Best Practices deckt die grundlegenden bis fortgeschrittenen
+Java-Konzepte ab und bietet schnelle Referenzen für häufig verwendete Syntax und Funktionen.
+Perfekt für Anfänger, die Java lernen, sowie Umsteiger, die ihr Wissen auffrischen möchten.
+
+Dieser mehrzeilige Text befindet sich in einem Blockkommentar. Sie sind nicht schachtelbar.
+Sie beginnen mit /* und enden mit */
+import java.util.Arrays;   // Importiert Typen wie 'Arrays' in den Namensraum.
+//                         ☝️ Zeilenkommentar beginnt mit // und endet am Zeilenende.
 
 @SuppressWarnings( "all" )
-public class Cheatsheet {
+//  ☝️           Mit @-Zeichen beginnen Annotationen. Sie liefern Metadaten für
+//              Laufzeitumgebung und Compiler (z. B. Warnungen zu ignorieren).
+public class Cheatsheet { /*
+ ☝️ Sichtbarkeitsmodifizierer, von überall zugreifbar
+        ☝️ Deklariert eine neue Klasse. Eine Klasse ist ein Typ.
+                       ☝️  { öffnet einen Block, danach befindet man sich im Rumpf.
+                          Nach der üblichen Konvention befindet sich { am Zeilenende. */
+  public static void main( String[] args ) {  /* Mehodendeklaration
+           ☝️ Auch ein Modifizierer: Methode ohne Objekt aufrufbar
+                 ☝️ Methode liefert keine Rückgabe.
+                      ☝️ Methodenname
+                         ☝️ ( Parameterliste ) für Übergaben an die Methode.
+                             ☝️ String[] ist der Parametertyp.
+                                     ☝️ args ist der Parametername.
+                                           ☝️ nach dem { befindet man sich wieder im Rumpf. */
+    System.out.println( "Hello World" ); /* Methodenaufruf
+                              ☝️  Argument (was man der Methode übergibt) "Hello World"
+          ☝️  ☝️  Mit dem Punkt "navigiert" man zur Methode println(...) */
+  }
+}
+
+@SuppressWarnings( "all" ) class DataTypesLiteralsExamples {
   public static void main( String[] args ) {
-    ///
-    /// Java Datentypen, Literale
-    ///
-    {
-      // Ganzzahlen
-      byte octet = 100;              // 8-Bit, Bereich: -128 bis 127
-      short s = 10000;               // 16-Bit, Bereich: -32,768 bis 32,767
-      int i = 100000;                // 32-Bit, Bereich: -2^31 bis 2^31-1
-      long l = 1000000000000L;       // 64-Bit, Bereich: -2^63 bis 2^63-1
-      //                   ☝️           Long Literale haben L oder l am Ende
+    // Ganzzahlen
+    byte octet = 100;              // 8-Bit, Bereich: -128 bis 127
+    short s = 10000;               // 16-Bit, Bereich: -32,768 bis 32,767
+    int i = 100000;                // 32-Bit, Bereich: -2^31 bis 2^31-1
+    long l = 1000000000000L;       // 64-Bit, Bereich: -2^63 bis 2^63-1
+    //                   ☝️           Long Literale haben L oder l am Ende
 
-      // Fließkommazahlen
-      double d = 3.14159265359;      // 64-bit IEEE 754 (Standard für Fließkommazahlen)
-      float f = 3.14f;               // 32-bit IEEE 754
-      //           ☝️                   Float-Literale haben F oder f am Ende.
+    // Fließkommazahlen
+    double d = 3.14159265359;      // 64-Bit IEEE 754 (Standard für Fließkommazahlen)
+    float f = 3.14f;               // 32-Bit IEEE 754
+    //           ☝️                   Float-Literale haben F oder f am Ende.
 
-      // Einzelne Zeichen
-      char c = 'A';                  // 16-bit Unicode Zeichen
-      //       ☝️                       Einzelne Zeichen in einzelnen Anführungszeichen
+    // Einzelne Zeichen
+    char c = 'A';                  // 16-Bit Unicode Zeichen
+    //       ☝️                       Einzelne Zeichen in einzelnen Anführungszeichen
 
-      // Boolesche Werte
-      boolean bool = true;           // true oder false
+    // Boolesche Werte
+    boolean bool = true;           // true oder false
 
-      // String
-      String str = "Strings stehen in 'doppelten' Anführungszeichen";
-      //          ☝️ ️
+    // String
+    String str = "Strings stehen in 'doppelten' Anführungszeichen";
+    //          ☝️ ️
 
-      String multiline = """
-                        ☝️ Mehrzeilige Zeichenketten beginnen mit drei ".    
-          Und dann folgt ein Zeilenumbruch.""";
+    String multiline = """
+                      ☝️ Mehrzeilige Zeichenketten beginnen mit drei ".    
+        Und dann folgt ein Zeilenumbruch.""";
 
-      // Finale (Konstante) Variablen
-      final double PI = 3.14159;  // Konstante (kann nicht geändert werden)
+    // Finale (Konstante) Variablen
+    final double PI = 3.14159;  // Konstante (kann nicht geändert werden)
 
-      // Literal-Notationen
-      int binary = 0b1010_1010;  // 170 in Dezimal
-      //           ☝️
-      int hex = 0xA5;            // 165 in Dezimal
-      //        ☝️
-      int oktal = 0777;          // 511 in Dezimal
-      //         ☝️️
-      int million = 1_000_000;   // Unterstriche machen große Zahlen lesbarer
-      //            ☝️  ☝️
-      double pi = 3.14_15_92;
-      long big = 1_234_567_890_123L;  // long mit L-Suffix
-    }
+    // Literal-Notationen
+    int binary = 0b1010_1010;  // 170 in Dezimal
+    //           ☝️
+    int hex = 0xA5;            // 165 in Dezimal
+    //        ☝️
+    int oktal = 0777;          // 511 in Dezimal
+    //         ☝️️
+    int million = 1_000_000;   // Unterstriche machen große Zahlen lesbarer
+    //            ☝️   ☝️
+    double pi = 3.14_15_92;
+    long big = 1_234_567_890_123L;  // long mit L-Suffix
+  }
+}
 
-    ///
-    /// Operatoren und Operanden
-    ///
-    {
-      int a = 10, b = 3;
-      // Arithmetische Operatoren
-      System.out.println( a + b );  // 13
-      System.out.println( a - b );  // 7
-      System.out.println( a * b );  // 30
-      System.out.println( a / b );  // 3
-      System.out.println( a % b );  // 1
-      System.out.println( ++a );    // 11
-      System.out.println( --b );    // 2
+@SuppressWarnings( "all" ) class OperatorAndOperandsExample {
+  public static void main( String[] args ) {
+    int a = 10, b = 3;
+    // Arithmetische Operatoren
+    System.out.println( a + b );  // 13
+    System.out.println( a - b );  // 7
+    System.out.println( a * b );  // 30
+    System.out.println( a / b );  // 3
+    System.out.println( a % b );  // 1
+    System.out.println( ++a );    // 11
+    System.out.println( --b );    // 2
 
-      int c;
-      // Zuweisungsoperatoren
-      c = 15;
-      System.out.println( c += 5 ); // 20
-      System.out.println( c -= 5 ); // 15
-      System.out.println( c *= 2 ); // 30
-      System.out.println( c /= 3 ); // 10
-      System.out.println( c %= 4 ); // 2
+    int ch;
+    // Zuweisungsoperatoren
+    ch = 15;
+    System.out.println( ch += 5 ); // 20
+    System.out.println( ch -= 5 ); // 15
+    System.out.println( ch *= 2 ); // 30
+    System.out.println( ch /= 3 ); // 10
+    System.out.println( ch %= 4 ); // 2
 
-      // Vergleichsoperatoren
-      System.out.println( 1 == 2 ); // false
-      System.out.println( 1 != 2 ); // true
-      System.out.println( 2 > 1 );  // true
-      System.out.println( 2 < 1 );  // false
-      System.out.println( 1 >= 1 ); // true
-      System.out.println( 2 <= 1 ); // false
+    // Vergleichsoperatoren
+    System.out.println( 1 == 2 ); // false
+    System.out.println( 1 != 2 ); // true
+    System.out.println( 2 > 1 );  // true
+    System.out.println( 2 < 1 );  // false
+    System.out.println( 1 >= 1 ); // true
+    System.out.println( 2 <= 1 ); // false
 
-      // Logische Operatoren
-      System.out.println( !true );         // false (NICHT)
-      System.out.println( true && false ); // false (UND)
-      System.out.println( true || false ); // true  (ODER)
-      System.out.println( true ^ false );  // true  (logisches XOR)
-      System.out.println( true ^ true );   // false
+    // Logische Operatoren
+    System.out.println( !true );         // false (NICHT)
+    System.out.println( true && false ); // false (UND)
+    System.out.println( true || false ); // true  (ODER)
+    System.out.println( true ^ false );  // true  (logisches XOR)
+    System.out.println( true ^ true );   // false
 
-      // Bitweise Operatoren
-      int m = 0b1010_1010;   //  170 in Dezimal
-      int n = 0b0011_1100;   //   60 in Dezimal
-      int p = -0b1010_1010;  // -170 in Dezimal
+    // Bitweise Operatoren
+    int m = 0b1010_1010;   //  170 in Dezimal
+    int n = 0b0011_1100;   //   60 in Dezimal
+    int p = -0b1010_1010;  // -170 in Dezimal
 
-      System.out.println( m & n );   // 44  (0b0010_1000)
-      System.out.println( m | n );   // 186 (0b1011_1110)
-      System.out.println( m ^ n );   // 142 (0b1001_0110)
-      System.out.println( ~m );      // -171 (0b1111_1111_1111_1111_1111_1111_0101_0101)
-      System.out.println( m << 2 );  // 680 (0b10_1010_1000)
-      System.out.println( m >> 2 );  // 42  (0b0010_1010)
-      System.out.println( m >>> 2 ); // 42  (0b0010_1010)
-      System.out.println( p >> 2 );  // -43 (0b1111_1111_1111_1111_1111_1111_1101_0110)
-      System.out.println( p >>> 2 ); // 1073741781 (0b0011_1111_1111_1111_1111_1111_1101_0110)
+    System.out.println( m & n );   // 44  (0b0010_1000)
+    System.out.println( m | n );   // 186 (0b1011_1110)
+    System.out.println( m ^ n );   // 142 (0b1001_0110)
+    System.out.println( ~m );      // -171 (0b1111_1111_1111_1111_1111_1111_0101_0101)
+    System.out.println( m << 2 );  // 680 (0b10_1010_1000)
+    System.out.println( m >> 2 );  // 42  (0b0010_1010)
+    System.out.println( m >>> 2 ); // 42  (0b0010_1010)
+    System.out.println( p >> 2 );  // -43 (0b1111_1111_1111_1111_1111_1111_1101_0110)
+    System.out.println( p >>> 2 ); // 1073741781 (0b0011_1111_1111_1111_1111_1111_1101_0110)
 
-      // Bedingungsoperator
-      // ergebnis = booleanBedingung ? wertWennWahr : wertWennFalsch;
-      double f = 12, g = 22;
-      double max = f > g ? f : g;      // 22
+    // Bedingungsoperator
+    // ergebnis = booleanBedingung ? wertWennWahr : wertWennFalsch;
+    double x = 12, y = 22;
+    double max = x > y ? x : y;      // 22
 
-      // Implizite Typumwandlung (Widening Casting)
-      long longVal = 1;                   // int zu long
-      float floatVal = 12345678901234L;   // long zu float
-      double doubleVal = floatVal;        // float zu double
-      int charCode = 'A';                 // char zu int
+    // Implizite Typumwandlung (Widening Casting)
+    long longVal = 1;                   // int zu long
+    float floatVal = 12345678901234L;   // long zu float
+    double doubleVal = floatVal;        // float zu double
+    int charCode = 'A';                 // char zu int
 
-      // Explizite Typumwandlung (Narrowing Casting)
-      double doubleNum = 9.78;
-      float floatNum = (float) doubleNum;     // double zu float
-      //                ☝️                       Zieltyp in runden Klammern vor Ausdruck
-      long longNum = (long) floatNum;         // float zu long
-      int intNum = (int) longNum;             // long zu int
-      short shortNum = (short) intNum;        // int zu short
-      byte byteNum = (byte) shortNum;         // short zu byte
-      char charVal = (char) charCode;         // int zu char
-    }
+    // Explizite Typumwandlung (Narrowing Casting)
+    double doubleNum = 9.78;
+    float floatNum = (float) doubleNum;     // double zu float
+    //                  ☝️                     Zieltyp in runden Klammern vor Ausdruck
+    long longNum = (long) floatNum;         // float zu long
+    int intNum = (int) longNum;             // long zu int
+    short shortNum = (short) intNum;        // int zu short
+    byte byteNum = (byte) shortNum;         // short zu byte
+    char charVal = (char) charCode;         // int zu char
+  }
+}
 
-    ///
-    /// Fallunterscheidungen
-    ///
-
+@SuppressWarnings( "all" ) class ControlStructuresExamples {
+  // Kontrollstrukturen sind Fallunterscheidungen und Schleifen
+  public static void main( String[] args ) {
     // Bedingte Anweisungen mit if-else
     int score = 75;
 
@@ -177,22 +199,20 @@ public class Cheatsheet {
       //       ☝️        null und default kann man mit case und Komma zusammenfassen
     } );
 
-    ///
-    /// Schleifen
-    ///
-
-    // While-Schleife, erst Prüfung vor ersten Durchlauf
+    // while-Schleife, erst Prüfung vor ersten Durchlauf
     while ( Math.random() < 0.2 ) {  // 👈 Bedingung muss vom Typ boolean sein
       // Wiederholter Code
     }
 
-    // Do-While-Schleife, mindestens ein Durchlauf, dann Prüfung auf weitere Durchläufe
+    // do-while-Schleife, mindestens ein Durchlauf, dann Prüfung auf weitere Durchläufe
     do {
       // Wiederholter Code
     } while ( Math.random() < 0.2 ); // 👈 Bedingung muss vom Typ boolean sein
 
-    // For-Schleife
-    for ( int i = 0; i < 10; i++ ) {
+    // for-Schleife
+    for (
+        int i = 0;
+        i < 10; i++ ) {
       //    ☝️                       Einmalige Initialisierung
       //             ☝️              Bedingung muss vom Typ boolean sein, vor jedem Schleifendurchlauf
       //                      ☝️     Am Ende jedes Schleifendurchlaufs
@@ -205,8 +225,7 @@ public class Cheatsheet {
   }
 }
 
-@SuppressWarnings( "all" )
-class ClassNewReferencesNullExamples {
+@SuppressWarnings( "all" ) class ClassNewReferencesNullExamples {
   public static void main( String[] args ) {
     new StringBuilder();
     //☝️           Neue Instanz der Klasse StringBuilder wird mit new erstellt
@@ -225,7 +244,7 @@ class ClassNewReferencesNullExamples {
     point.x = 10;                                        // Setzen einer Objektvariablen
     point.y = point.x;                                   // Auslesen und Setzen einer Objektvariablen
 
-    /// null-Verweise
+    // null-Verweise
     StringBuilder nullObject = null;                     // Referenz zeigt auf kein Objekt
 
     if ( nullObject == null ) {                          // Prüfen, ob eine Referenz null ist
@@ -239,8 +258,9 @@ class ClassNewReferencesNullExamples {
   }
 }
 
-@SuppressWarnings( "all" )
-class ArrayExamples {
+@SuppressWarnings( "all" ) class ArrayExamples {
+  // Ein Array ist eine Datenstruktur, die eine festgelegte Anzahl von Elementen desselben Typs
+  // in einer geordneten Sequenz speichert.
   public static void main( String[] args ) {
     // Arrays deklarieren und Array-Literal-Notation
     int[] intArray = { 1, 2, 3, 4, 5 };              // Array von Ganzzahlen
@@ -279,7 +299,7 @@ class ArrayExamples {
 
     int[][][] threeDArray = new int[ 2 ][ 2 ][ 2 ];      // Dreidimensionales Array 2x2x2
 
-    /// Mehrdimensionale Arrays iterieren
+    // Mehrdimensionale Arrays iterieren
     for ( int i = 0; i < matrix.length; i++ ) {
       for ( int j = 0; j < matrix[ i ].length; j++ ) {
         System.out.print( matrix[ i ][ j ] + " " );
@@ -299,8 +319,7 @@ class ArrayExamples {
   }
 }
 
-@SuppressWarnings( "all" )
-class StringExamples {
+@SuppressWarnings( "all" ) class StringExamples {
   public static void main( String[] args ) {
 
     // char
@@ -359,8 +378,7 @@ class StringExamples {
   }
 }
 
-@SuppressWarnings( "all" )
-class CoreClasseExamples {
+@SuppressWarnings( "all" ) class CoreClasseExamples {
   public static void main( String[] args ) {
     int intPrim = 42;
     Integer intObj = Integer.valueOf( intPrim );  // Explizites Boxing
@@ -406,8 +424,7 @@ abstract class Shape {
   }
 }
 
-@SuppressWarnings( "all" )
-class Rectangle extends Shape {
+@SuppressWarnings( "all" ) class Rectangle extends Shape {
   //             ☝️                     Rectangle erbt von Shape. Nur eine Oberklasse ist erlaubt.
   private double width;
   private double height;
@@ -443,8 +460,7 @@ class Rectangle extends Shape {
 
   // Überschreiben der Methode displayInfo()
   // Alle nicht-privaten und nicht-finalen Methoden können überschrieben werden.
-  @Override
-  public void displayInfo() {
+  @Override public void displayInfo() {
     super.displayInfo();
     System.out.println( "Es ist ein Rechteck mit Breite " + width + " und Höhe " + height + "." );
   }
@@ -455,8 +471,7 @@ class Rectangle extends Shape {
   }
 }
 
-@SuppressWarnings( "all" )
-class RectangleExamples /* extends Object */ {
+@SuppressWarnings( "all" ) class RectangleExamples /* extends Object */ {
   //                          ☝️    Wird keine explizite Oberklasse erweitert, ist es automatisch Object.
 
   public static void main( String[] args ) {
@@ -488,16 +503,20 @@ class RectangleExamples /* extends Object */ {
       if ( shape instanceof Rectangle ) {
         //          ☝️                       Prüfen, ob hinter shape etwas vom Typ Rectangle steht.
         Rectangle rect = (Rectangle) shape;
+        //                   ☝️     Explizite Typumwandlung von Shape auf Rectangle.
         System.out.println( rect.getPerimeter() );
         //                           ☝️     Ohne Typumwandlung gibt es getPerimeter() auf Shape nicht.
       }
+
+      // Rectangle rect = (Rectangle) new Object();
+      //                    ☝️     Explizite Typumwandlung führt zur ClassCastException,
+      //                           weil Object kein Rectangle ist.
     }
 
-    if ( shape1 instanceof Rectangle rectangle1 && shape2 instanceof Rectangle rectangle2 ) {
+    if ( shape1 instanceof Rectangle rectangle1 &&
+        shape2 instanceof Rectangle rectangle2 ) {
       //                             ☝️   Pattern-Variable bei instanceof
-      //                                                                       ☝️
       Rectangle larger = Rectangle.getLarger( rectangle1, rectangle2 );
     }
   }
-}
-```
+}```
