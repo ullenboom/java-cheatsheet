@@ -519,4 +519,73 @@ abstract class Shape {
       Rectangle larger = Rectangle.getLarger( rectangle1, rectangle2 );
     }
   }
+}
+
+interface Playable {
+  // ☝️ Schnittstellen (Interfaces) werden mit dem Schlüsselwort interface deklariert.
+
+  /* public static final */ int MIN_VOLUME = 0, MAX_VOLUME = 100;
+  //   ☝️ Jede Variable innerhalb einer Schnittstelle ist implizit public, static und final.
+  //      Sie sind also Konstanten, und ihre Werte können nicht geändert werden.
+
+  static int validateVolume( int volume ) {
+    //☝️ Eine Schnittstelle kann statische Methoden mit Implementierung enthalten.
+    // Diese Methoden können direkt über die Schnittstelle aufgerufen werden, ohne dass eine Instanz benötigt wird.
+    return Math.clamp( volume, MIN_VOLUME, MAX_VOLUME );
+  }
+
+  /* public abstract */ void play();
+  // ☝️ Jede Methode innerhalb einer Schnittstelle ist implizit public und abstract.
+  //                              ☝️ Abstrakte Methoden habe keine Implementierung.
+}
+
+interface Rateable {
+  //          ☝️ Viele Schnittstellen enden auf -able, um eine Fähigkeit oder Eigenschaft anzuzeigen.
+
+  void rate( int rating );
+
+  int getRating();
+
+  private String generateStars( int count, boolean filled ) {
+    // ☝️ Schnittstellen können private Methoden enthalten. Diese können nur innerhalb der
+    // Schnittstelle verwendet werden, um Code zwischen Default- oder statischen Methoden zu teilen.
+    return (filled ? "★" : "☆").repeat( count );
+  }
+
+  default String getRatingStars() {
+    // ☝️ Eine Schnittstelle kann Default-Methoden mit Standardimplementierung enthalten.
+    // Sie können überschrieben werden, müssen es aber nicht.
+    return generateStars( getRating(), true ) + generateStars( 10 - getRating(), false );
+  }
+}
+
+class Podcast implements Playable {
+  //           ☝️ Schnittstellen werden mit dem Schlüsselwort implements implementiert,
+  //           nicht mit extends wie bei Klassen.
+
+  @Override public void play() {}
+  // ☝️ Diese Methode überschreibt und implementiert die abstrakte Methode der Schnittstelle Playable.
+}
+
+class Track implements Playable, Rateable {
+  //                          ☝️ Eine Klasse kann mehrere Schnittstellen implementieren,
+  //                          um mehrere Fähigkeiten zu kombinieren.
+  @Override public void play() {}
+
+  @Override public void rate( int rating ) {}
+
+  @Override public int getRating() {return 0;}
+}
+
+abstract class Album implements Rateable {}
+// ☝️ Eine Klasse muss nicht alle abstrakten Methoden ihrer Schnittstellen implementieren.
+//    Aber wenn sie nicht alle abstrakten Methoden implementiert, muss die Klasse selbst abstrakt sein.
+
+class RatedPodcast extends Podcast implements Rateable {
+  //               ☝️ Eine Klasse kann eine Oberklasse haben und beliebig viele Schnittstellen implementieren.
+  @Override public void rate( int rating ) {}
+
+  @Override public int getRating() {return 0;}
+
+  // RatedPodcast enthält alle Methoden aus Object, Podcast, Playable und Rateable.
 }```
