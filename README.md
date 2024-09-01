@@ -9,9 +9,9 @@ Sie beginnen mit /* und enden mit */
 import java.util.Arrays;   // Importiert Typen wie 'Arrays' in den Namensraum.
 //                         ☝️ Zeilenkommentar beginnt mit // und endet am Zeilenende.
 
-@SuppressWarnings( "all" )
-//  ☝️           Mit @-Zeichen beginnen Annotationen. Sie liefern Metadaten für
-//              Laufzeitumgebung und Compiler (z. B. Warnungen zu ignorieren).
+@SuppressWarnings( "all" ) /*
+☝️           Mit @-Zeichen beginnen Annotationen. Sie liefern Metadaten für
+             Laufzeitumgebung und Compiler (z. B. Warnungen zu ignorieren). */
 public class Cheatsheet { /*
  ☝️ Sichtbarkeitsmodifizierer, von überall zugreifbar
         ☝️ Deklariert eine neue Klasse. Eine Klasse ist ein Typ.
@@ -157,15 +157,15 @@ public class Cheatsheet { /*
     // Bedingte Anweisungen mit if-else
     int score = 75;
 
-    if ( score >= 90 ) {               // 👈 Bedingung muss vom Typ boolean sein
-      System.out.println( "Note: A" ); // 👈 Code, wenn Bedingung wahr ist
+    if ( score >= 90 ) {                // 👈 Bedingung muss vom Typ boolean sein
+      System.out.println( "Score: A" ); // 👈 Code, wenn Bedingung wahr ist
     }
     // else if ( andereBooleanBedingung ) {
     else if ( score >= 60 ) {
-      System.out.println( "Note: B" ); // 👈 Code, wenn andere Bedingung wahr ist
+      System.out.println( "Score: B" ); // 👈 Code, wenn andere Bedingung wahr ist
     }
     else {
-      System.out.println( "Note: C" ); // 👈 Code, wenn keine Bedingung wahr ist
+      System.out.println( "Score: C" ); // 👈 Code, wenn keine Bedingung wahr ist
     }
     // -> Note: B
 
@@ -398,19 +398,23 @@ public class Cheatsheet { /*
 }
 
 @SuppressWarnings( "all" )
-// Basisklasse für geometrische Formen
-abstract class Shape {
-  //  ☝️                               Von abstrakten Klassen können keine Instanzen gebildet werden.
+abstract class Shape {               // Basisklasse für geometrische Formen
+  // ☝️                                 Von abstrakten Klassen können keine Instanzen gebildet werden.
   private String color;
-  //  ☝️                               Private Eigenschaft ist außerhalb von Shape nicht einsehbar.
+  // ☝️                                 Private Eigenschaft ist außerhalb von Shape nicht einsehbar.
 
   Shape( String color ) {            // Parametrisierter Konstruktor
     this.color = color;              // Initialisiert die Farbe
   }
 
+  Shape() {                          // Eigener Paramterloser Konstruktor
+    this( "Black" );
+    //☝️                                 Mit this(...) Weiterleitung an anderen Konstruktor der Klasse.
+  }
+
   public String getColor() {
     return /*this.*/color;
-    //        ☝️                     this ist nicht nötig, da es keinen Namenskonflikt gibt.
+    //        ☝️                         this ist nicht nötig, da es keinen Namenskonflikt gibt.
   }
 
   public abstract double getArea();
@@ -419,90 +423,85 @@ abstract class Shape {
 
   // Konkrete Methode in der abstrakten Klasse
   public void displayInfo() {
-    System.out.println( "Dies ist eine " + getColor() + " Form." );
-    //                                       ☝️  Auch direkter Zugriff auf color wäre denkbar.
+    System.out.println( "Shape color: " + getColor() );
+    //                                      ☝️  Auch direkter Zugriff auf color wäre denkbar.
   }
 }
 
-@SuppressWarnings( "all" ) class Rectangle extends Shape {
-  //             ☝️                     Rectangle erbt von Shape. Nur eine Oberklasse ist erlaubt.
-  private double width;
-  private double height;
+@SuppressWarnings( "all" )
+class Circle extends Shape {
+  //            ☝️                       Rectangle erbt von Shape. Nur eine Oberklasse ist erlaubt.
+  private double radius;
 
-  // Konstruktor
-  public Rectangle( String color, double width, double height ) {
+  public Circle( String color, double radius ) {
     super( color );
-    // ☝️                                Mit super Aufruf des Konstruktors der Oberklasse.
-    this.width = width;
-    this.height = height;
+    //☝️                                 Mit super Aufruf des Konstruktors der Oberklasse.
+    this.radius = radius;
   }
 
   // Getter und Setter
-  public double getWidth() {return width;}
+  public double getRadius() {return radius;}
 
-  public void setWidth( double width ) {this.width = width;}
-
-  public double getHeight() {return height;}
-
-  public void setHeight( double height ) {this.height = height;}
+  public void setRadius( double radius ) {this.radius = radius;}
 
   // Implementation der abstrakten Methode
   @Override
   // ☝️                     Annotation dokumentiert das Überschreiben von Methoden.
   public double getArea() {
-    return width * height;
+    return radius * radius * Math.PI;
   }
 
   // Rectangle kann als Unterklasse neue Methode hinzufügen.
   public double getPerimeter() {
-    return 2 * (width + height);
+    return 2 * Math.PI * radius;
   }
 
   // Überschreiben der Methode displayInfo()
   // Alle nicht-privaten und nicht-finalen Methoden können überschrieben werden.
   @Override public void displayInfo() {
     super.displayInfo();
-    System.out.println( "Es ist ein Rechteck mit Breite " + width + " und Höhe " + height + "." );
+    //☝️    Mit super.methode(...) wird eine Methode der Oberklasse aufgerufen.
+    //      Ohne super gibt es einen rekursiven Aufruf.
+    System.out.println( "A circle with radius " + radius + "." );
   }
 
-  // Statische Methode zum Vergleich zweier Rechtecke
-  public static Rectangle getLarger( Rectangle r1, Rectangle r2 ) {
+  // Statische Methode zum Vergleich zweier Kreise
+  public static Circle getLarger( Circle r1, Circle r2 ) {
     return r1.getArea() > r2.getArea() ? r1 : r2;
   }
 }
 
-@SuppressWarnings( "all" ) class RectangleExamples /* extends Object */ {
-  //                          ☝️    Wird keine explizite Oberklasse erweitert, ist es automatisch Object.
+@SuppressWarnings( "all" )
+class CircleExamples /* extends Object */ {
+  //                      ☝️    Wird keine explizite Oberklasse erweitert, ist es automatisch Object.
+
+  // CircleExamples() {}
+  //  ☝️    Eine Klasse ohne expliziten Konstruktor bekommt automatisch
+  //       vom Compiler einen sogenannten Default-Konstruktor.
 
   public static void main( String[] args ) {
-    Rectangle rect1 = new Rectangle( "Rot", 5, 3 );
-    Rectangle rect2 = new Rectangle( "Blau", 4, 4 );
+    Circle redCircle = new Circle( "Red", 5 );
+    Circle blueCircle = new Circle( "Blue", 4 );
 
-    System.out.println( "Rechteck 1:" );
-    rect1.displayInfo();
-    System.out.println( "Fläche: " + rect1.getArea() );
-    System.out.println( "Umfang: " + rect1.getPerimeter() );
+    redCircle.displayInfo();
+    System.out.printf( "Area: %s, Circumference: %s%n", redCircle.getArea(),
+                       redCircle.getPerimeter() );
 
-    System.out.println( "\nRechteck 2:" );
-    rect2.displayInfo();
-    System.out.println( "Fläche: " + rect2.getArea() );
-    System.out.println( "Umfang: " + rect2.getPerimeter() );
-
-    Shape shape1 = new Rectangle( "Rot", 5, 3 );
-    Shape shape2 = new Rectangle( "Blau", 4, 2 );
+    Shape shape1 = new Circle( "Red", 5 );
+    Shape shape2 = new Circle( "Blue", 4 );
     // ☝️   Referenztyp kann ein Basistyp sein
     //                  ☝️   Objekttyp
 
-    Shape[] shapes = { shape1, shape2, new Rectangle( "Grün", 2, 2 ) };
+    Shape[] shapes = { shape1, shape2, new Circle( "Green", 2 ) };
 
     for ( Shape shape : shapes ) {
       shape.displayInfo();
       System.out.println( shape.getArea() );
       //                          ☝️   Methodenaufruf dynamisch gebunden an tatsächlichen Typ (Polymorphie)
 
-      if ( shape instanceof Rectangle ) {
+      if ( shape instanceof Circle ) {
         //          ☝️                       Prüfen, ob hinter shape etwas vom Typ Rectangle steht.
-        Rectangle rect = (Rectangle) shape;
+        Circle rect = (Circle) shape;
         //                   ☝️     Explizite Typumwandlung von Shape auf Rectangle.
         System.out.println( rect.getPerimeter() );
         //                           ☝️     Ohne Typumwandlung gibt es getPerimeter() auf Shape nicht.
@@ -513,32 +512,34 @@ abstract class Shape {
       //                           weil Object kein Rectangle ist.
     }
 
-    if ( shape1 instanceof Rectangle rectangle1 &&
-        shape2 instanceof Rectangle rectangle2 ) {
+    if ( shape1 instanceof Circle circle1 &&
+        shape2 instanceof Circle circle2 ) {
       //                             ☝️   Pattern-Variable bei instanceof
-      Rectangle larger = Rectangle.getLarger( rectangle1, rectangle2 );
+      Circle larger = Circle.getLarger( circle1, circle2 );
     }
   }
 }
 
+@SuppressWarnings( "all" )
 interface Playable {
-  // ☝️ Schnittstellen (Interfaces) werden mit dem Schlüsselwort interface deklariert.
+  // ☝️ Schnittstellen (engl. interfaces) werden mit dem Schlüsselwort interface deklariert.
 
   /* public static final */ int MIN_VOLUME = 0, MAX_VOLUME = 100;
   //   ☝️ Jede Variable innerhalb einer Schnittstelle ist implizit public, static und final.
-  //      Sie sind also Konstanten, und ihre Werte können nicht geändert werden.
 
   static int validateVolume( int volume ) {
     //☝️ Eine Schnittstelle kann statische Methoden mit Implementierung enthalten.
-    // Diese Methoden können direkt über die Schnittstelle aufgerufen werden, ohne dass eine Instanz benötigt wird.
+    //  Diese Methoden können direkt über die Schnittstelle aufgerufen werden,
+    //  ohne dass eine Instanz benötigt wird.
     return Math.clamp( volume, MIN_VOLUME, MAX_VOLUME );
   }
 
   /* public abstract */ void play();
-  // ☝️ Jede Methode innerhalb einer Schnittstelle ist implizit public und abstract.
   //                              ☝️ Abstrakte Methoden habe keine Implementierung.
+  // ☝️ Jede Methode innerhalb einer Schnittstelle ist implizit public und abstract.
 }
 
+@SuppressWarnings( "all" )
 interface Rateable {
   //          ☝️ Viele Schnittstellen enden auf -able, um eine Fähigkeit oder Eigenschaft anzuzeigen.
 
@@ -559,17 +560,19 @@ interface Rateable {
   }
 }
 
+@SuppressWarnings( "all" )
 class Podcast implements Playable {
   //           ☝️ Schnittstellen werden mit dem Schlüsselwort implements implementiert,
-  //           nicht mit extends wie bei Klassen.
+  //              nicht mit extends wie bei Klassen.
 
   @Override public void play() {}
   // ☝️ Diese Methode überschreibt und implementiert die abstrakte Methode der Schnittstelle Playable.
 }
 
+@SuppressWarnings( "all" )
 class Track implements Playable, Rateable {
   //                          ☝️ Eine Klasse kann mehrere Schnittstellen implementieren,
-  //                          um mehrere Fähigkeiten zu kombinieren.
+  //                            um mehrere Fähigkeiten zu kombinieren.
   @Override public void play() {}
 
   @Override public void rate( int rating ) {}
@@ -577,10 +580,12 @@ class Track implements Playable, Rateable {
   @Override public int getRating() {return 0;}
 }
 
+@SuppressWarnings( "all" )
 abstract class Album implements Rateable {}
 // ☝️ Eine Klasse muss nicht alle abstrakten Methoden ihrer Schnittstellen implementieren.
 //    Aber wenn sie nicht alle abstrakten Methoden implementiert, muss die Klasse selbst abstrakt sein.
 
+@SuppressWarnings( "all" )
 class RatedPodcast extends Podcast implements Rateable {
   //               ☝️ Eine Klasse kann eine Oberklasse haben und beliebig viele Schnittstellen implementieren.
   @Override public void rate( int rating ) {}
@@ -588,4 +593,87 @@ class RatedPodcast extends Podcast implements Rateable {
   @Override public int getRating() {return 0;}
 
   // RatedPodcast enthält alle Methoden aus Object, Podcast, Playable und Rateable.
+}
+
+@SuppressWarnings( "all" ) record Person(
+    String name, int age   // Record-Komponenten in runden Klammern.
+) {
+  // private final String name, int age
+  // Record-Komponenten werden zu privaten, finalen Variablen
+
+  // int birthdate;
+  // ☝️ Eigene Objektvariablen sind unzulässig.
+
+  public boolean isAdult() {
+    //          ☝️ Eigene Methoden sind zulässig.
+
+    return age() >= 18;
+    // return age >= 18;
+    //        ☝️ Zugriff über die privaten Variablen oder Zugriffsmethoden (engl. accessor method)
+  }
+
+  @Override public String name() {
+    // ☝️ Zugriffsmethoden können überschrieben werden.
+    return name.toLowerCase();
+  }
+}
+
+@SuppressWarnings( "all" )
+record Cube( int radius )
+    // extends java.lang.Record
+    //    ☝️ Oberklasse ist immer Record, keine Vererbung möglich.
+    implements Comparable<Cube> {
+  //      ☝️ Record kann Schnittstellen implementieren.
+
+  // Impliziter eigener kanonischer Konstruktor
+  Cube( int radius ) {
+    if ( radius < 0 )
+      throw new IllegalArgumentException();
+
+    this.radius = radius;
+    //          ☝️ Im kanonischen Konstruktor müssen alle Record-Variablen initialisiert werden.
+  }
+
+  @Override
+  public int compareTo( Cube other ) {
+    return Integer.compare( this.radius, other.radius );
+  }
+}
+
+@SuppressWarnings( "all" ) record LineSegment( double length ) {
+
+  public static final double UNIT_LENGTH = 1.0;
+
+  public static LineSegment unit() {
+    return new LineSegment( UNIT_LENGTH );
+  }
+
+  // Kompakter Konstruktor, es fehlt die Parameterliste
+  LineSegment {
+    if ( length < 0 )
+      throw new IllegalArgumentException();
+    // this.length wird automatisch mit length initialisiert.
+  }
+
+  LineSegment() {
+    // ☝️ Weitere Konstruktoren sind möglich.
+    this( 0 );
+    // ☝️ Nur Weiterleitung auf kanonischen Konstruktor erlaubt.
+  }
+}
+
+@SuppressWarnings( "all" ) class RecordExamples {
+  public static void main( String[] args ) {
+    Person chris = new Person( "Chris", 50 );
+    //                 ☝️ Jedes Record hat einen kanonischen Konstruktor.
+    chris.age();
+    chris.isAdult();
+    chris.name();
+    //    ☝️ Für alle Record-Komponenten werden Zugriffsmethoden generiert.
+
+    chris.toString();
+    chris.equals( null );
+    chris.hashCode();
+    //    ☝️ Jedes Record hat diese Methoden sinnvoll implementiert.
+  }
 }```
