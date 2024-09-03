@@ -9,25 +9,50 @@ Sie beginnen mit /* und enden mit */
 import java.util.Arrays;   // Importiert Typen wie 'Arrays' in den Namensraum.
 //                         ☝️ Zeilenkommentar beginnt mit // und endet am Zeilenende.
 
-@SuppressWarnings( "all" ) /*
-☝️           Mit @-Zeichen beginnen Annotationen. Sie liefern Metadaten für
-             Laufzeitumgebung und Compiler (z. B. Warnungen zu ignorieren). */
 public class Cheatsheet { /*
  ☝️ Sichtbarkeitsmodifizierer, von überall zugreifbar
         ☝️ Deklariert eine neue Klasse. Eine Klasse ist ein Typ.
-                       ☝️  { öffnet einen Block, danach befindet man sich im Rumpf.
-                          Nach der üblichen Konvention befindet sich { am Zeilenende. */
-  public static void main( String[] args ) {  /* Mehodendeklaration
+                       ☝️  { öffnet einen Block, danach befindet man sich im Rumpf des Typs. */
+  public static void main( String[] args ) {  /* Methodendeklaration
            ☝️ Auch ein Modifizierer: Methode ohne Objekt aufrufbar
                  ☝️ Methode liefert keine Rückgabe.
                       ☝️ Methodenname
                          ☝️ ( Parameterliste ) für Übergaben an die Methode.
                              ☝️ String[] ist der Parametertyp.
                                      ☝️ args ist der Parametername.
-                                           ☝️ nach dem { befindet man sich wieder im Rumpf. */
-    System.out.println( "Hello World" ); /* Methodenaufruf
-                              ☝️  Argument (was man der Methode übergibt) "Hello World"
-          ☝️  ☝️  Mit dem Punkt "navigiert" man zur Methode println(...) */
+                                           ☝️ nach dem { befindet man sich im Rumpf der Methode. */
+  } /*
+ ☝️  Jede öffnende { hat immer eine schließende } */
+}
+
+/*
+  javac Cheatsheet.java  ->  Compiler erzeugt Datei Cheatsheet.class mit Bytecode.
+  java Cheatsheet        ->  Laufzeitumgebung (JVM) führt Bytecode aus.
+ */
+
+@SuppressWarnings( "all" ) /*
+☝️           Mit @-Zeichen beginnen Annotationen. Sie liefern Metadaten für
+             Laufzeitumgebung und Compiler (z. B. Warnungen zu ignorieren). */
+class InputAndOutputExamples {
+  public static void main( String[] args ) {
+    //                                    ☝️  Nach der Java-Konvention ist { am Zeilenende.
+    System.out.println();                    // Methodenaufruf
+    //   ☝️  ☝️  Mit dem Punkt "navigiert" man zur Methode println(...)
+
+    System.out.println( "Hello World" );
+    //                       ☝️  Argument (was man der Methode übergibt): "Hello World"
+
+    System.out.println( Math.PI );
+    //           ☝️  println(...) ist eine überladene Methoden: Es gibt sie mit unterschiedlichen Parametern.
+
+    System.out.println( new java.util.Scanner( System.in ).nextInt() );
+    //                                                        ☝️  Eine Ganzzahl einlesen
+
+    String line = new java.util.Scanner( System.in ).nextLine();   // Variablendeklaration
+    // ☝️  Typ der Variablen
+    //      ☝️  Name der Variablen, muss frei sein
+    //         ☝️  Direkte Initialisierung
+
   }
 }
 
@@ -634,8 +659,7 @@ record Cube( int radius )
     //          ☝️ Im kanonischen Konstruktor müssen alle Record-Variablen initialisiert werden.
   }
 
-  @Override
-  public int compareTo( Cube other ) {
+  @Override public int compareTo( Cube other ) {
     return Integer.compare( this.radius, other.radius );
   }
 }
@@ -643,6 +667,7 @@ record Cube( int radius )
 @SuppressWarnings( "all" ) record LineSegment( double length ) {
 
   public static final double UNIT_LENGTH = 1.0;
+  //      ☝️👇  Statische Variablen und Methoden sind zulässig.
 
   public static LineSegment unit() {
     return new LineSegment( UNIT_LENGTH );
@@ -676,4 +701,5 @@ record Cube( int radius )
     chris.hashCode();
     //    ☝️ Jedes Record hat diese Methoden sinnvoll implementiert.
   }
-}```
+}
+```
