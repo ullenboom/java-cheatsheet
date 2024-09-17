@@ -702,4 +702,168 @@ record Cube( int radius )
     //    ☝️ Jedes Record hat diese Methoden sinnvoll implementiert.
   }
 }
+
+interface Movable {
+    // ☝️ Schnittstelle mit einer abstrakten Methode
+    void move();
+}
+
+enum Direction implements Movable {
+    NORTH("Up") {
+        @Override
+        public void specialAction() {
+            System.out.println("It's cold in the North!");
+        }
+    },
+    EAST("Right"),
+    SOUTH("Down") {
+        @Override
+        public void specialAction() {
+            System.out.println("It's hot in the South!");
+        }
+    },
+    WEST("Left");
+
+    private final String description;
+
+    Direction(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public void move() {
+        // ☝️ Gemeinsame Implementierung der move()-Methode für alle Richtungen
+        System.out.println("Moving " + description + "!");
+    }
+
+    public void specialAction() {
+        System.out.println("Nothing special here.");
+    }
+
+    public static Direction reverse(Direction dir) {
+        // ☝️ Statische Methode, die einen Switch-Ausdruck verwendet, um die Richtung umzukehren.
+        return switch (dir) {
+            case NORTH -> SOUTH;
+            case SOUTH -> NORTH;
+            case EAST -> WEST;
+            case WEST -> EAST;
+        };
+    }
+}
+
+// Nutzung des Enums
+public class Main {
+    public static void main(String[] args) {
+        Direction.NORTH.move();
+        // ☝️ Jeder Enum-Wert implementiert die move()-Methode der Schnittstelle Movable.
+        // Ausgabe: Moving Up!
+
+        Direction.WEST.move();
+        // Ausgabe: Moving Left!
+
+        Direction.NORTH.specialAction();
+        // ☝️ NORTH überschreibt die specialAction() Methode.
+        // Ausgabe: It's cold in the North!
+
+        Direction.SOUTH.specialAction();
+        // ☝️ SOUTH überschreibt ebenfalls die specialAction() Methode.
+        // Ausgabe: It's hot in the South!
+
+        Direction.EAST.specialAction();
+        // ☝️ EAST verwendet die Standard-Implementierung von specialAction().
+        // Ausgabe: Nothing special here.
+
+        Direction currentDirection = Direction.NORTH;
+        Direction oppositeDirection = Direction.reverse(currentDirection);
+        System.out.println("Opposite of " + currentDirection + " is " + oppositeDirection);
+        // ☝️ Die statische Methode reverse() gibt die entgegengesetzte Richtung zurück.
+        // Ausgabe: Opposite of NORTH is SOUTH
+    }
+}
+
+enum LightState {
+    LIGHT_ON, LIGHT_OFF;
+    // ☝️ Einfaches Enum mit zwei Zuständen: Licht an und Licht aus.
+
+    public static void main(String[] args) {
+        // Zugriff auf ein Enum-Wert
+        LightState currentState = LightState.LIGHT_ON;
+        System.out.println(currentState);  // Ausgabe: LIGHT_ON
+
+        // Standardmethoden
+        System.out.println(currentState.name());  // Ausgabe: LIGHT_ON
+        // ☝️ Gibt den Namen des Enum-Werts als String zurück.
+
+        System.out.println(currentState.ordinal());  // Ausgabe: 0
+        // ☝️ Gibt die Position des Enum-Werts, beginnend bei 0.
+
+        // Iteration über alle Enum-Werte
+        for (LightState state : LightState.values()) {
+            System.out.println(state);
+        }
+        // ☝️ Die values()-Methode gibt ein Array aller Enum-Werte zurück.
+
+        // String in Enum umwandeln
+        LightState parsedState = LightState.valueOf("LIGHT_OFF");
+        System.out.println(parsedState);  // Ausgabe: LIGHT_OFF
+        // ☝️ Konvertiert einen String in den entsprechenden Enum-Wert.
+    }
+}
+
+interface Switchable {
+    void toggle();
+}
+
+enum LightState implements Switchable {
+    LIGHT_ON {
+        @Override
+        public void toggle() {
+            System.out.println("Turning the light off.");
+        }
+
+        @Override
+        public void status() {
+            System.out.println("The light is currently ON.");
+        }
+    },
+    LIGHT_OFF {
+        @Override
+        public void toggle() {
+            System.out.println("Turning the light on.");
+        }
+
+        @Override
+        public void status() {
+            System.out.println("The light is currently OFF.");
+        }
+    };
+
+    // ☝️ Jeder Enum-Wert kann seine eigene Implementierung der Methoden haben.
+
+    public void status() {
+        // ☝️ Standardmethode, die von spezifischen Enum-Werten überschrieben werden kann.
+        System.out.println("Unknown light state.");
+    }
+
+    public static LightState switchState(LightState currentState) {
+        // ☝️ Statische Methode, die einen Switch-Ausdruck verwendet, um den Zustand umzuschalten.
+        return switch (currentState) {
+            case LIGHT_ON -> LIGHT_OFF;
+            case LIGHT_OFF -> LIGHT_ON;
+        };
+    }
+
+    public static void main(String[] args) {
+        // Status anzeigen und umschalten
+        LightState currentState = LightState.LIGHT_ON;
+        currentState.status();  // Ausgabe: The light is currently ON.
+        currentState.toggle();  // Ausgabe: Turning the light off.
+
+        // Umschalten des Zustands
+        currentState = LightState.switchState(currentState);
+        currentState.status();  // Ausgabe: The light is currently OFF.
+        currentState.toggle();  // Ausgabe: Turning the light on.
+    }
+}
+
 ```
