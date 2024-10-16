@@ -866,4 +866,49 @@ enum LightState implements Switchable {
     }
 }
 
+public static void main(String[] args) {
+    // Hilfsmethode für kompakte Ausgabe
+    printFormatted("HashSet", new HashSet<>(List.of("🍎", "🍌", "🍇", "🍎")));
+
+    // NavigableSet (LocalTime): Sortiert nach aufsteigender Zeit
+    NavigableSet<LocalTime> times = new TreeSet<>(List.of(
+            LocalTime.of(14, 30), LocalTime.of(9, 15), LocalTime.of(18, 45), LocalTime.of(6, 0)
+    ));
+    printFormatted("NavigableSet", times);
+
+    printFormatted("Früheste Zeit", times.first());
+    printFormatted("Späteste Zeit", times.last());
+    printFormatted("Zeiten vor Mittag", times.headSet(LocalTime.NOON));
+    printFormatted("Zeiten am Nachmittag", times.tailSet(LocalTime.NOON));
+    printFormatted("Enthält 14:30?", times.contains(LocalTime.of(14, 30)));
+    printFormatted("Nächste Zeit nach 10:00", times.higher(LocalTime.of(10, 0)));
+    printFormatted("Größte Zeit vor 16:00", times.lower(LocalTime.of(16, 0)));
+
+    // ArrayList
+    List<String> arrayList = new ArrayList<>(List.of("🍎", "🍍"));
+    arrayList.add("🍑");
+    printFormatted("ArrayList", arrayList);
+
+    // LinkedList
+    LinkedList<String> linkedList = new LinkedList<>(List.of("🥭", "🍉"));
+    linkedList.addFirst("🍋");
+    printFormatted("LinkedList", linkedList);
+
+    // HashMap: Schlüssel-Wert-Paare
+    Map<String, Integer> fruitQuantities = new HashMap<>();
+    fruitQuantities.put("🍎", 5);
+    fruitQuantities.put("🍍", 10);
+    printFormatted("HashMap", fruitQuantities);
+
+    // TreeSet mit Comparator: Sortiert nach Nachname, Vorname
+    Set<Person> people = new TreeSet<>(Comparator.comparing(Person::lastName).thenComparing(Person::firstName));
+    people.addAll(List.of(
+            new Person("John", "Doe"),
+            new Person("Jane", "Smith"),
+            new Person("John", "Smith"),
+            new Person("Alice", "Doe")
+    ));
+    System.out.println("Personen:");
+    people.forEach(p -> printFormatted("", "%s %s".formatted(p.firstName(), p.lastName())));
+}
 ```
